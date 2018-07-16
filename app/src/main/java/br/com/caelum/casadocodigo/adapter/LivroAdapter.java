@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.caelum.casadocodigo.R;
-import br.com.caelum.casadocodigo.LivroDelegate;
+import br.com.caelum.casadocodigo.delegate.LivroDelegate;
 import br.com.caelum.casadocodigo.modelo.Livro;
 import butterknife.BindView;
 import butterknife.ButterKnife;

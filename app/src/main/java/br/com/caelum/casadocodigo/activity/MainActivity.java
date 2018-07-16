@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import br.com.caelum.casadocodigo.R;
-import br.com.caelum.casadocodigo.LivroDelegate;
+import br.com.caelum.casadocodigo.delegate.LivroDelegate;
 import br.com.caelum.casadocodigo.fragment.DetalhesLivroFragment;
 import br.com.caelum.casadocodigo.fragment.ListaLivrosFragment;
 import br.com.caelum.casadocodigo.modelo.Livro;
