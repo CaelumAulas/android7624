@@ -10,6 +10,8 @@ import java.util.List;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.modelo.Livro;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LivroAdapter extends RecyclerView.Adapter {
 
@@ -47,12 +49,13 @@ public class LivroAdapter extends RecyclerView.Adapter {
         return livros.size();
     }
 
-    private class NossoViewHolder extends RecyclerView.ViewHolder {
-        public final TextView nome;
+    class NossoViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.item_livro_nome)
+        public TextView nome;
 
         public NossoViewHolder(View itemView) {
             super(itemView);
-            this.nome = (TextView) itemView.findViewById(R.id.item_livro_nome);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
