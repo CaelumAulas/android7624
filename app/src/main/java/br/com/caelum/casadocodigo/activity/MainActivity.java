@@ -1,14 +1,18 @@
 package br.com.caelum.casadocodigo.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import br.com.caelum.casadocodigo.R;
+import br.com.caelum.casadocodigo.LivroDelegate;
+import br.com.caelum.casadocodigo.fragment.DetalhesLivroFragment;
 import br.com.caelum.casadocodigo.fragment.ListaLivrosFragment;
+import br.com.caelum.casadocodigo.modelo.Livro;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LivroDelegate {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,15 +20,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        FragmentManager manager = getSupportFragmentManager();
-
-        FragmentTransaction transaction = manager.beginTransaction();
-
-        transaction.replace(R.id.frame_principal, new ListaLivrosFragment());
-
-        transaction.commit();
+        exibe(new ListaLivrosFragment(), false);
 
 
     }
 
+
+    public void exibe(Fragment fragment, boolean precisaEntrarNaPilha) {
+
+        FragmentManager manager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        transaction.replace(R.id.frame_principal, fragment);
+
+        if (precisaEntrarNaPilha) {
+            transaction.addToBackStack(null);
+        }
+        transaction.commit();
+    }
+
+    @Override
+    public void lidaCom(Livro livro) {
+
+        exibe(DetalhesLivroFragment.com(livro), true);
+    }
 }
