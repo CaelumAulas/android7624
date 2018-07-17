@@ -1,9 +1,10 @@
 package br.com.caelum.casadocodigo.webservices;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 import br.com.caelum.casadocodigo.converter.LivroServiceConverterFactory;
-import br.com.caelum.casadocodigo.delegate.LivroDelegate;
 import br.com.caelum.casadocodigo.modelo.Livro;
 import br.com.caelum.casadocodigo.webservices.service.LivrosService;
 import retrofit2.Call;
@@ -14,16 +15,13 @@ import retrofit2.Retrofit;
 public class WebClient {
 
     public static final String URL = "http://cdcmob.herokuapp.com/";
-    private LivroDelegate delegate;
 
     private Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(new LivroServiceConverterFactory())
             .build();
 
-    public WebClient(LivroDelegate delegate) {
-        this.delegate = delegate;
-    }
+
 
     public void pegaLivros() {
 
@@ -36,13 +34,13 @@ public class WebClient {
             public void onResponse(Call<ArrayList<Livro>> call, Response<ArrayList<Livro>> response) {
                 ArrayList<Livro> livros = response.body();
 
-                delegate.lidaCom(livros);
+                EventBus.getDefault().post(livros);
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Livro>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Livro>> call, Throwable erro) {
 
-                delegate.lidaCom(t);
+                EventBus.getDefault().post(erro);
             }
         });
 
