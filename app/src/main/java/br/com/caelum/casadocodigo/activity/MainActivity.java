@@ -43,24 +43,6 @@ public class MainActivity extends AppCompatActivity implements LivroDelegate {
 
     }
 
-    private boolean primeiraVezQueCriouATela(Bundle savedInstanceState) {
-        return savedInstanceState == null;
-    }
-
-
-    public void exibe(Fragment fragment, boolean precisaEntrarNaPilha) {
-
-        FragmentManager manager = getSupportFragmentManager();
-
-        FragmentTransaction transaction = manager.beginTransaction();
-
-        transaction.replace(R.id.frame_principal, fragment);
-
-        if (precisaEntrarNaPilha) {
-            transaction.addToBackStack(null);
-        }
-        transaction.commit();
-    }
 
     @Override
     public void lidaCom(Livro livro) {
@@ -87,6 +69,28 @@ public class MainActivity extends AppCompatActivity implements LivroDelegate {
         }
     }
 
+    @Subscribe
+    @Override
+    public void lidaCom(Throwable erro) {
+
+        exibe(ErroFragment.com(erro), false);
+    }
+
+
+    private void exibe(Fragment fragment, boolean precisaEntrarNaPilha) {
+
+        FragmentManager manager = getSupportFragmentManager();
+
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        transaction.replace(R.id.frame_principal, fragment);
+
+        if (precisaEntrarNaPilha) {
+            transaction.addToBackStack(null);
+        }
+        transaction.commit();
+    }
+
     private Fragment pegaFragmentDaTela() {
 
         FragmentManager manager = getSupportFragmentManager();
@@ -95,10 +99,9 @@ public class MainActivity extends AppCompatActivity implements LivroDelegate {
     }
 
 
-    @Subscribe
-    @Override
-    public void lidaCom(Throwable erro) {
-
-        exibe(ErroFragment.com(erro), false);
+    private boolean primeiraVezQueCriouATela(Bundle savedInstanceState) {
+        return savedInstanceState == null;
     }
+
 }
+
