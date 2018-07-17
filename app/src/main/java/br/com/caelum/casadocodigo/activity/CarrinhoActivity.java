@@ -7,10 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.adapter.ItensAdapter;
@@ -43,23 +40,9 @@ public class CarrinhoActivity extends AppCompatActivity {
 
         lista.setLayoutManager(new LinearLayoutManager(this));
 
-        String valorEmString = valorDos(itens);
-
-        valorDaCompra.setText(valorEmString);
+        valorDaCompra.setText(carrinho.valorTotal());
 
     }
 
-    private String valorDos(List<Item> itens) {
-        Double valorTotal = 10.0;
-        for (Item item : itens) {
-            valorTotal += item.getValor();
-        }
 
-
-        NumberFormat format = DecimalFormat.
-                getCurrencyInstance(
-                        new Locale("pt", "BR"));
-
-        return format.format(valorTotal);
-    }
 }

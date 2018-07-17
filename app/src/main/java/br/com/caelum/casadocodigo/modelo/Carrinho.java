@@ -1,9 +1,12 @@
 package br.com.caelum.casadocodigo.modelo;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class Carrinho implements Serializable {
 
@@ -23,6 +26,21 @@ public class Carrinho implements Serializable {
 
     public List<Item> getItens() {
         return Collections.unmodifiableList(itens);
+    }
+
+
+    public String valorTotal() {
+        Double valorTotal = 0.0;
+        for (Item item : itens) {
+            valorTotal += item.getValor();
+        }
+
+
+        NumberFormat format = DecimalFormat.
+                getCurrencyInstance(
+                        new Locale("pt", "BR"));
+
+        return format.format(valorTotal);
     }
 
 }
