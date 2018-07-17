@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.modelo.Livro;
 import butterknife.BindView;
@@ -68,6 +70,8 @@ public class DetalhesLivroFragment extends Fragment {
         Livro livro = (Livro) arguments.getSerializable("livro");
 
         nome.setText(livro.getNome());
+        Picasso.get().load(livro.getUrlFoto())
+                .placeholder(R.drawable.livro).fit().into(foto);
         // teria que fazer os outros bindings
 
         return view;

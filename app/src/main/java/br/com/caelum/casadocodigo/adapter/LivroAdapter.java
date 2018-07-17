@@ -4,7 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,9 +43,27 @@ public class LivroAdapter extends RecyclerView.Adapter {
 
         Livro livro = livros.get(position);
 
-        NossoViewHolder holder = (NossoViewHolder) viewHolder;
+        final NossoViewHolder holder = (NossoViewHolder) viewHolder;
 
         holder.nome.setText(livro.getNome());
+
+        Picasso.get()
+                .load(livro.getUrlFoto())
+                .fit()
+                .into(holder.foto, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        // já deu certo
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                        Picasso.get()
+                                .load(R.drawable.livro)
+                                .into(holder.foto);
+                    }
+                });
 
 
     }
@@ -54,6 +76,9 @@ public class LivroAdapter extends RecyclerView.Adapter {
     class NossoViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_livro_nome)
         public TextView nome;
+
+        @BindView(R.id.item_livro_foto)
+        public ImageView foto;
 
         public NossoViewHolder(View itemView) {
             super(itemView);
