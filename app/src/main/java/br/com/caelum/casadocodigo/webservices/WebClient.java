@@ -23,11 +23,11 @@ public class WebClient {
 
 
 
-    public void pegaLivros() {
+    public void pegaLivros(int indice) {
 
         LivrosService service = retrofit.create(LivrosService.class);
 
-        Call<ArrayList<Livro>> call = service.buscaLivros();
+        Call<ArrayList<Livro>> call = service.buscaLivros(indice,10);
 
         call.enqueue(new Callback<ArrayList<Livro>>() {
             @Override

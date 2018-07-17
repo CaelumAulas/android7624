@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements LivroDelegate {
         EventBus.getDefault().register(this);
 
         if (primeiraVezQueCriouATela(savedInstanceState)) {
-            new WebClient().pegaLivros();
+            new WebClient().pegaLivros(0);
 
             exibe(new LoadingFragment(), false);
         }
@@ -72,7 +72,26 @@ public class MainActivity extends AppCompatActivity implements LivroDelegate {
     @Override
     public void lidaCom(ArrayList<Livro> livros) {
 
-        exibe(ListaLivrosFragment.com(livros), false);
+        Fragment fragmentDaTela = pegaFragmentDaTela();
+
+        if (fragmentDaTela instanceof ListaLivrosFragment ) {
+
+            ListaLivrosFragment listaFragment = (ListaLivrosFragment) fragmentDaTela;
+
+
+            listaFragment.atualizaListaCom(livros);
+
+        } else {
+
+            exibe(ListaLivrosFragment.com(livros), false);
+        }
+    }
+
+    private Fragment pegaFragmentDaTela() {
+
+        FragmentManager manager = getSupportFragmentManager();
+
+        return manager.findFragmentById(R.id.frame_principal);
     }
 
 
