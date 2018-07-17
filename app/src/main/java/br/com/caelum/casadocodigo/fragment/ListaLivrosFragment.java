@@ -20,8 +20,24 @@ import butterknife.ButterKnife;
 
 public class ListaLivrosFragment extends Fragment {
 
+    private static final String LISTA = "lista";
+
+
     @BindView(R.id.fragment_lista_livros)
     RecyclerView listaDeLivros;
+
+    public static ListaLivrosFragment com(ArrayList<Livro> livros) {
+        ListaLivrosFragment fragment = new ListaLivrosFragment();
+
+        Bundle arguments = new Bundle();
+
+        arguments.putSerializable(LISTA, livros);
+
+        fragment.setArguments(arguments);
+
+        return fragment;
+    }
+
 
     @Nullable
     @Override
@@ -33,14 +49,9 @@ public class ListaLivrosFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        List<Livro> livros = criaLivros();
+        ArrayList<Livro> livros = recuperaLista();
 
-
-        LivroAdapter adapter = new LivroAdapter(livros);
-
-
-        listaDeLivros.setAdapter(adapter);
-
+        carregaLista(livros);
 
         listaDeLivros.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -49,15 +60,18 @@ public class ListaLivrosFragment extends Fragment {
 
     }
 
-    private List<Livro> criaLivros() {
-        List<Livro> livros = new ArrayList<>();
+    private ArrayList<Livro> recuperaLista() {
+        Bundle arguments = getArguments();
 
-        for (int i = 1; i <= 10; i++) {
-
-            Livro livro = new Livro();
-            livro.setNome("Nome " + i);
-            livros.add(livro);
-        }
-        return livros;
+        return (ArrayList<Livro>) arguments.getSerializable(LISTA);
     }
+
+    public void carregaLista(List<Livro> livros) {
+
+        LivroAdapter adapter = new LivroAdapter(livros);
+
+
+        listaDeLivros.setAdapter(adapter);
+    }
+
 }
