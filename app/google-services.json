@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "659878323953",
+    "firebase_url": "https://casadocodigo-98e7e.firebaseio.com",
+    "project_id": "casadocodigo-98e7e",
+    "storage_bucket": "casadocodigo-98e7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659878323953:android:a3d4e0ad47b98c1f",
+        "android_client_info": {
+          "package_name": "br.com.caelum.casadocodigo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659878323953-6m9os8uv3s8uganhr38b7pq5lav1m5an.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.caelum.casadocodigo",
+            "certificate_hash": "84097083e932efc9866a8c012dd0632a4d107b0f"
+          }
+        },
+        {
+          "client_id": "659878323953-pblj0v4l35lmk1mv4ht4g1svgh1ghr56.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.caelum.casadocodigo",
+            "certificate_hash": "6e5e09669b63afce65a192ab614e757216d7ec8d"
+          }
+        },
+        {
+          "client_id": "659878323953-q7uo5d80sku6h9qjt1iqaa3ih472h6ii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.caelum.casadocodigo",
+            "certificate_hash": "40d79c8225671d423aed9e72ed9c246a71101cdb"
+          }
+        },
+        {
+          "client_id": "659878323953-6kj0e3qpsonr8runfq61d76d7qg5goke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1CCEoJphQmot4NB-yjAgShNe5_m5VzQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659878323953-6kj0e3qpsonr8runfq61d76d7qg5goke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
