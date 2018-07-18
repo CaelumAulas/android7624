@@ -15,7 +15,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import br.com.caelum.casadocodigo.R;
+import br.com.caelum.casadocodigo.application.CasaDoCodigoApplication;
 import br.com.caelum.casadocodigo.delegate.LivroDelegate;
 import br.com.caelum.casadocodigo.fragment.DetalhesLivroFragment;
 import br.com.caelum.casadocodigo.fragment.ErroFragment;
@@ -26,15 +29,25 @@ import br.com.caelum.casadocodigo.webservices.WebClient;
 
 public class MainActivity extends AppCompatActivity implements LivroDelegate {
 
+    private WebClient webClient;
+
+    @Inject
+    public void setWebClient(WebClient webClient) {
+        this.webClient = webClient;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        CasaDoCodigoApplication app = (CasaDoCodigoApplication) getApplication();
+        app.getComponent().inject(this);
+
         EventBus.getDefault().register(this);
 
         if (primeiraVezQueCriouATela(savedInstanceState)) {
-            new WebClient().pegaLivros(0);
+            webClient.pegaLivros(0);
 
             exibe(new LoadingFragment(), false);
         }

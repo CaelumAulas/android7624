@@ -16,8 +16,11 @@ import com.mugen.attachers.BaseAttacher;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.adapter.LivroAdapter;
+import br.com.caelum.casadocodigo.application.CasaDoCodigoApplication;
 import br.com.caelum.casadocodigo.modelo.Livro;
 import br.com.caelum.casadocodigo.webservices.WebClient;
 import butterknife.BindView;
@@ -33,6 +36,13 @@ public class ListaLivrosFragment extends Fragment {
 
     private boolean carregando = false;
     private ArrayList<Livro> livros = new ArrayList<>();
+
+    private WebClient webClient;
+
+    @Inject
+    public void setWebClient(WebClient webClient) {
+        this.webClient = webClient;
+    }
 
     public static ListaLivrosFragment com(ArrayList<Livro> livros) {
         ListaLivrosFragment fragment = new ListaLivrosFragment();
@@ -57,6 +67,9 @@ public class ListaLivrosFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        CasaDoCodigoApplication app = (CasaDoCodigoApplication) getActivity().getApplication();
+        app.getComponent().inject(this);
+
         livros = recuperaLista();
 
         carregaLista();
@@ -68,7 +81,7 @@ public class ListaLivrosFragment extends Fragment {
             @Override
             public void onLoadMore() {
                 carregando = true;
-                new WebClient().pegaLivros(livros.size());
+                webClient.pegaLivros(livros.size());
                 Snackbar
                         .make(listaDeLivros, "Carregando mais itens", Snackbar.LENGTH_LONG)
                         .show();
