@@ -1,10 +1,12 @@
 package br.com.caelum.casadocodigo.webservices;
 
+import android.util.Base64;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,7 +32,6 @@ public class WebClient {
     }
 
     public void pegaLivros(int indice) {
-
         Call<ArrayList<Livro>> call = service.buscaLivros(indice,10);
 
         call.enqueue(new Callback<ArrayList<Livro>>() {
@@ -47,5 +48,14 @@ public class WebClient {
             }
         });
 
+    }
+
+    public List<Livro> buscaLivros() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

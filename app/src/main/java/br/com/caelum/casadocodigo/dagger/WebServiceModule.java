@@ -41,5 +41,5 @@ public class WebServiceModule {
         LivrosService service = retrofit.create(LivrosService.class);
         return service;
     }
-    
+
 }

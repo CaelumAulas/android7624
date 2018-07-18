@@ -28,19 +28,20 @@ public class Carrinho implements Serializable {
         return Collections.unmodifiableList(itens);
     }
 
-
-    public String valorTotal() {
+    public double calculaTotal() {
         Double valorTotal = 0.0;
         for (Item item : itens) {
             valorTotal += item.getValor();
         }
+        return valorTotal;
+    }
 
-
+    public String valorTotal() {
         NumberFormat format = DecimalFormat.
                 getCurrencyInstance(
                         new Locale("pt", "BR"));
 
-        return format.format(valorTotal);
+        return format.format(calculaTotal());
     }
 
 }
