@@ -1,6 +1,7 @@
 package br.com.caelum.casadocodigo.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.login_senha)
     TextView campoSenha;
+
+    @BindView(R.id.login_logar)
+    Button logar;
 
     private FirebaseAuth auth;
 
@@ -57,12 +61,21 @@ public class LoginActivity extends AppCompatActivity {
         String senha = campoSenha.getText().toString();
 
         if (!email.isEmpty() && !senha.isEmpty()) {
+
+            logar.setText("Entrando...");
+            logar.setClickable(false);
+            logar.setBackgroundColor(Color.GRAY);
+
             auth.signInWithEmailAndPassword(email, senha)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(getBaseContext(), "Login não foi possível", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), "Não foi possível entrar", Toast.LENGTH_SHORT).show();
+
+                                logar.setText("Entrar");
+                                logar.setClickable(true);
+                                logar.setBackgroundColor(getColor(R.color.laranja));
                             }
                         }
                     });

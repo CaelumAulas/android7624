@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="#ff9b19"
+            android:background="@color/laranja"
             android:text="Entrar"
             android:textColor="#FFF" />
 

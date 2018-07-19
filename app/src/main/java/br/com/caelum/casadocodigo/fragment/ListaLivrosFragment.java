@@ -1,6 +1,7 @@
 package br.com.caelum.casadocodigo.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
 import com.mugen.attachers.BaseAttacher;
@@ -20,6 +24,7 @@ import javax.inject.Inject;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.adapter.LivroAdapter;
+import br.com.caelum.casadocodigo.adapter.LivroInvertidoAdapter;
 import br.com.caelum.casadocodigo.application.CasaDoCodigoApplication;
 import br.com.caelum.casadocodigo.modelo.Livro;
 import br.com.caelum.casadocodigo.webservices.WebClient;
@@ -38,6 +43,7 @@ public class ListaLivrosFragment extends Fragment {
     private ArrayList<Livro> livros = new ArrayList<>();
 
     private WebClient webClient;
+    private FirebaseRemoteConfig remoteConfig;
 
     @Inject
     public void setWebClient(WebClient webClient) {
@@ -56,6 +62,28 @@ public class ListaLivrosFragment extends Fragment {
         return fragment;
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        remoteConfig = FirebaseRemoteConfig.getInstance();
+
+
+        remoteConfig
+                .fetch(15)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                        if (task.isSuccessful()) {
+                            remoteConfig.activateFetched();
+                        }
+
+                    }
+                });
+    }
 
     @Nullable
     @Override
@@ -114,10 +142,20 @@ public class ListaLivrosFragment extends Fragment {
 
     private void carregaLista() {
 
-        LivroAdapter adapter = new LivroAdapter(livros);
 
+        boolean ingles = remoteConfig.getBoolean("idioma");
 
+        RecyclerView.Adapter adapter;
+
+        if (ingles) {
+            adapter = new LivroAdapter(livros);
+
+        } else {
+            adapter = new LivroInvertidoAdapter(livros);
+        }
         listaDeLivros.setAdapter(adapter);
+
+
     }
 
     public void atualizaListaCom(ArrayList<Livro> livros) {
