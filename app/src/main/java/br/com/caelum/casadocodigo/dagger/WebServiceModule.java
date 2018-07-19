@@ -3,6 +3,7 @@ package br.com.caelum.casadocodigo.dagger;
 import javax.inject.Singleton;
 
 import br.com.caelum.casadocodigo.converter.LivroServiceConverterFactory;
+import br.com.caelum.casadocodigo.webservices.service.DeviceService;
 import br.com.caelum.casadocodigo.webservices.service.LivrosService;
 import dagger.Module;
 import dagger.Provides;
@@ -23,7 +24,7 @@ public class WebServiceModule {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(livroServiceConverterFactory)
-                //.addConverterFactory(JacksonConverterFactory.create())
+                //.axddConverterFactory(JacksonConverterFactory.create())
                 .build();
 
         return retrofit;
@@ -33,6 +34,18 @@ public class WebServiceModule {
     @Singleton
     public LivroServiceConverterFactory getLivroServiceConverterFactory() {
         return new LivroServiceConverterFactory();
+    }
+
+
+    @Provides
+    @Singleton
+    public DeviceService getDeviceService() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080")
+                .build();
+
+        DeviceService service = retrofit.create(DeviceService.class);
+        return service;
     }
 
     @Provides

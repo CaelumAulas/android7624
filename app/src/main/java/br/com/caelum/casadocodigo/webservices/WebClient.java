@@ -1,8 +1,5 @@
 package br.com.caelum.casadocodigo.webservices;
 
-import android.util.Base64;
-import android.util.Log;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -11,24 +8,25 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import br.com.caelum.casadocodigo.converter.LivroServiceConverterFactory;
 import br.com.caelum.casadocodigo.modelo.Livro;
+import br.com.caelum.casadocodigo.webservices.service.DeviceService;
 import br.com.caelum.casadocodigo.webservices.service.LivrosService;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 @Singleton
 public class WebClient {
 
     private LivrosService service;
 
+    private DeviceService deviceService;
+
+
     @Inject
-    public WebClient(LivrosService service) {
+    public WebClient(LivrosService service, DeviceService deviceService) {
         this.service = service;
+        this.deviceService = deviceService;
     }
 
     public void pegaLivros(int indice) {
@@ -58,4 +56,20 @@ public class WebClient {
         }
         return new ArrayList<>();
     }
+
+    public void cadastraDevice(String id, String email){
+        deviceService.cadastraDevice(email,id).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 }

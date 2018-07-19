@@ -16,7 +16,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import javax.inject.Inject;
+
 import br.com.caelum.casadocodigo.R;
+import br.com.caelum.casadocodigo.application.CasaDoCodigoApplication;
+import br.com.caelum.casadocodigo.fcm.GeradorDeTokenFCM;
+import br.com.caelum.casadocodigo.webservices.WebClient;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,11 +39,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    @Inject
+    WebClient client;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        CasaDoCodigoApplication application = (CasaDoCodigoApplication) getApplication();
+        application.getComponent().inject(this);
 
         auth = FirebaseAuth.getInstance();
 
@@ -57,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_logar)
     public void logar() {
-        String email = campoEmail.getText().toString();
+        final String email = campoEmail.getText().toString();
         String senha = campoSenha.getText().toString();
 
         if (!email.isEmpty() && !senha.isEmpty()) {
@@ -76,6 +86,10 @@ public class LoginActivity extends AppCompatActivity {
                                 logar.setText("Entrar");
                                 logar.setClickable(true);
                                 logar.setBackgroundColor(getColor(R.color.laranja));
+                            } else {
+                                String id = new GeradorDeTokenFCM().geraToken();
+
+                                client.cadastraDevice(id, email);
                             }
                         }
                     });
